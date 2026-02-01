@@ -1,6 +1,6 @@
 # Multi-Label Few-Shot Image Classification via Pairwise Feature Augmentation and Flexible Prompt Learning
 
-This repository contains the unofficial PyTorch implementation for **PFA+FPL**, a framework designed for **Multi-label Few-shot Learning**.
+This repository contains the unofficial PyTorch implementation for [**PFA+FPL**](https://ojs.aaai.org/index.php/AAAI/article/view/32578/34733), a framework designed for **Multi-label Few-shot Learning**.
 
 The method leverages **CLIP (Contrastive Language-Image Pre-training)** as a powerful visual backbone and introduces a **Pairwise Feature Augmentation (PFA)** mechanism to enrich the support set. It combines image prototypes with text prototypes to enhance classification performance in low-data regimes.
 
