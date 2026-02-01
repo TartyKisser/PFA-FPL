@@ -132,4 +132,14 @@ python run.py \
 ## 📝 Citation
 
 If you use this code in your research, please cite the relevant paper.
-
+```bash
+@inproceedings{liu2025multi,
+  title={Multi-Label Few-Shot Image Classification via Pairwise Feature Augmentation and Flexible Prompt Learning},
+  author={Liu, Han and Wang, Yuanyuan and Zhang, Xiaotong and Zhang, Feng and Wang, Wei and Ma, Fenglong and Yu, Hong},
+  booktitle={Proceedings of the AAAI Conference on Artificial Intelligence},
+  volume={39},
+  number={5},
+  pages={5433--5441},
+  year={2025}
+}
+```
