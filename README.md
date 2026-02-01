@@ -62,11 +62,45 @@ Project_Root/
 > **Note**: The image paths are defined in `data/dataset.py` (default points to `../dataset/COCO2014`). Please adjust the `path_to_images_dict` variable if your images are stored elsewhere. The path to the dataset split JSON file (e.g., `data/COCO2014.json`) is hardcoded in `run.py`. You must manually update the file path in the `__main__` block of `run.py` if you are using a different metadata file.
 
 ### 2. Index File Description
+The project uses pre-processed files for efficient data loading. Below is a detailed breakdown of the file formats, using the **Visual Genome (VG)** dataset as an example.
 
-The project uses pre-processed files for efficient data loading:
+* **`images.npy`** (e.g., `VG_test_images.npy`)
+    A Numpy array containing the filenames of the images in the dataset.
+    ```python
+    ['2380712.jpg', '2377523.jpg', '2354885.jpg', ..., '2408302.jpg', '2332127.jpg', '2351388.jpg']
+    ```
 
-* **`images.npy`**: A Numpy array containing the filenames of the images.
-* **`labels.npz`**: A CSR sparse matrix storing the one-hot encoded labels for the corresponding images.
+* **`label_to_idx_dict.npy`** (e.g., `VG_test_label_to_idx_dict.npy`)
+    An array storing mappings for each label (e.g., 20 dictionaries/entries for 20 labels). Each entry contains the indices of all images that possess that specific label.
+
+* **`labels.npz`** (e.g., `VG_test_labels.npz`)
+    Stores the label matrix in **Compressed Sparse Row (CSR)** format. It consists of the following five components:
+
+    1.  **`indices`** (Shape: `(24151,)`, Data type: `int32`):
+        Represents the column indices of non-zero elements in the sparse matrix. Each element corresponds to the column index of a non-zero value.
+    2.  **`indptr`** (Shape: `(8741,)`, Data type: `int32`):
+        Represents the row pointers. It records the starting position of non-zero elements for each row. Specifically, `indptr[i]` indicates the index in `indices` and `data` where the non-zero elements for row `i` begin.
+    3.  **`format`**:
+        A string (e.g., `b'csr'`) indicating the sparse matrix format. Here, it stands for **Compressed Sparse Row**.
+    4.  **`shape`** (Shape: `(2,)`, Data type: `int64`):
+        The shape of the matrix. For example, `[8740, 20]` indicates **8740 rows** (images) and **20 columns** (classes).
+    5.  **`data`** (Shape: `(24151,)`, Data type: `float64`):
+        Stores the values of all non-zero elements. In this dataset, all non-zero values are `1.0`.
+
+    **Example of CSR Representation:**
+    Consider a 4x4 sparse matrix:
+    ```
+    [
+     [1, 0, 0, 0],
+     [0, 1, 0, 0],
+     [0, 0, 1, 0],
+     [0, 0, 0, 1]
+    ]
+    ```
+    Its CSR representation would be:
+    * `indices = [0, 1, 2, 3]` (Column index of the non-zero element in each row)
+    * `indptr = [0, 1, 2, 3, 4]` (Start/end indices for rows)
+    * `data = [1.0, 1.0, 1.0, 1.0]` (Values)
 
 ## 🚀 Usage
 
